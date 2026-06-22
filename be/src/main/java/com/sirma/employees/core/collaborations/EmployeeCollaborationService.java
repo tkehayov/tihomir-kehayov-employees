@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeCollaborationService {
 
+    /**
+     * Finds the pair of employees who worked together on a common project for the longest period.
+     * @return the pair with the most days together
+     */
     public PairEmployeesTogether calculateMaxCollaboration(List<EmployeeCollaboration> employeeCollaborations) {
         Map<Long, List<EmployeeCollaboration>> projectEmployees = getProjectEmployees(employeeCollaborations);
 
@@ -42,12 +46,14 @@ public class EmployeeCollaborationService {
         return findMaxDaysCollaborators(pairEmployeesTogether);
     }
 
+    // Groups all collaborations by project ID
     private Map<Long, List<EmployeeCollaboration>> getProjectEmployees(List<EmployeeCollaboration> employeeCollaborations) {
         return employeeCollaborations
                 .stream()
                 .collect(Collectors.groupingBy(EmployeeCollaboration::getProjectId));
     }
 
+    // Returns the number of overlapping days between two employment periods, or 0 if they don't work together
     private long calculateCollaborationDays(
             LocalDate fromEmployee1,
             LocalDate toEmployee1,
@@ -75,6 +81,7 @@ public class EmployeeCollaborationService {
         }
     }
 
+    // Returns the pair with the highest daysTogether from the list
     private PairEmployeesTogether findMaxDaysCollaborators(List<PairEmployeesTogether> pairEmployeesTogetherList) {
         if (pairEmployeesTogetherList == null || pairEmployeesTogetherList.isEmpty()) {
             return null;

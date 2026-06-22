@@ -21,10 +21,10 @@ export interface EmployeeCollaboration {
   styleUrl: './app.css',
 })
 export class App {
-  protected selectedFileName = signal('');
+  selectedFileName = signal('');
 
-  protected responseData = signal<EmployeeCollaboration | null>(null);
-  private http = inject(HttpClient);
+  responseData = signal<EmployeeCollaboration | null>(null);
+  http = inject(HttpClient);
 
   protected uploadFile(event: Event): void {
     const input = event.target as HTMLInputElement;
